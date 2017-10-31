@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+{% load staticfiles %}				<!-- 載人 static 資料夾檔案 -->
+
+<head>
+	<meta charset="UTF-8">
+	<title>Data Test</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!--引入Bootstrap-->
+	<link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+	<!--加入自定義CSS-->
+	<style>
+		.container-fluid {
+			margin-top: 15px;
+		}
+
+		#ownInfo th {
+			text-align: center;
+		}
+
+		#ownInfo td {
+			text-align: center;
+			font-family: Microsoft JhengHei;
+			font-size: 18px;
+		}
+	</style>
+
+</head>
+
+<body id="body">
+	<div class="container-fluid">
+		<div class="row clearfix">
+			<div class="col-md-12 column">
+				<nav class="navbar navbar-default" role="navigation">
+
+					<div class="navbar-header">
+						<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"> <span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button>
+						<a class="navbar-brand" hred="#">報錯資料</a>
+					</div>
+
+					<div id="linkbar" class="collapse navbar-collapse">
+						<ul class="nav navbar-nav">
+							<li class="active"><a href="http://127.0.0.1:8000/index/">首頁</a></li>
+							<li><a href="http://127.0.0.1:8000/wronglist/">報錯資料</a></li>
+						</ul>
+					</div>
+
+
+				</nav>
+			</div>
+		</div>
+	</div>
+	<div class="container-fluid">
+		<div class="row clearfix">
+			<!--左邊-->
+			<div class="col-md-5 column">
+				<!--左上 panel -->
+				<div class="row clearfix">
+					<div class="col-md-12 column">
+						<div class="panel panel-primary">
+							<div class="panel-heading">
+								<h3 class="panel-title">
+								本機端資料
+							</h3>
+							</div>
+
+							<div class="panel-body">
+								<!--左上再包一個panel-->
+								<div class="panel panel-info">
+									<div class="panel-heading">
+										<h3 class="panel-title">
+										距離您最近的點是
+									</h3>
+									</div>
+
+									<div class="panel-body">
+										<h3 id="stNote" style="font-family: Microsoft JhengHei;text-align: center;">東山高中</h3>
+									</div>
+									<table class="table table-bordered" id="ownInfo">
+										<thead>
+											<tr>
+												<th>距離</th>
+												<th>PM2.5</th>
+												<th>PM10</th>
+												<th>溫度</th>
+												<th>濕度</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<td>4.22km</td>
+												<td id="PM2.5">89</td>
+												<td id="PM10">99</td>
+												<td id="Temperature">23&deg;</td>
+												<td id="Humidity">99%</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+								<!--左上再包一個panel-->
+							</div>
+							<div class="panel-footer">
+								<button class="btn btn-info btn-block" id="btn_get_gps" onclick="getLocation()">獲取本地GPS</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!--左上 panel -->
+				<!--左下 panel -->
+				<div class="row clearfix">
+					<div class="col-md-12 column">
+						<div class="panel panel-info">
+							<div class="panel-heading">
+								<h3 class="panel-title">
+								所有地點List
+							</h3>
+							</div>
+							<div class="panel-body">
+								<form action="." method="get" id="stform">
+									<select size="20" class="form-control" style="font-family: Microsoft JhengHei;
+									font-size: 18px;" id="site_lst" name="site" onchange="select(this.value)">
+									{% for id,site in site_lst %}
+										<option value={{id}}>{{site}}
+									{% endfor %}
+									</select>
+									<input id="clickBtn" type="submit" value="sent" style="visibility:hidden">
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!--左下 panel -->
+			</div>
+			<!--左邊-->
+
+			<!--右邊-->
+			<div class="col-md-7 column">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<div class="btn-toolbar" role="toolbar">
+							<div class="btn-group">
+								<label class="btn btn-info">
+						        <input type="checkbox"> PM2.5
+						    </label>
+								<label class="btn btn-info">
+						        <input type="checkbox"> PM10
+						    </label>
+							</div>
+
+							<div class="btn-group pull-left">
+								<button type="button" class="btn btn-success" onclick="_1()">1小時</button>
+								<button type="button" class="btn btn-success" onclick="_6()">6小時</button>
+								<button type="button" class="btn btn-success" onclick="_12()">12小時</button>
+							</div>
+						</div>
+					</div>
+
+					<div class="panel-body">
+
+						<!--該點的數據-->
+
+						<div class="panel panel-warning">
+							<div id="past" class="panel-heading" onload="show_char()">
+								<h3 class="panel-title" id="point_data">該點過去的數據</h3>
+							</div>
+							<div class="panel-body">
+								<div style="width:700px;">
+									<canvas id="pastChart">
+					        	<!--CharJs-->
+					        	<!--######-->
+					        </canvas>
+								</div>
+							</div>
+						</div>
+						<!--##########-->
+						<!--全部的數據-->
+						<div class="panel panel-warning">
+							<div class="panel-heading">
+								<h3 class="panel-title">鄰近的數據</h3>
+							</div>
+							<div class="panel-body">
+								<div style="width: 700px;">
+									<canvas id="areaChart">
+					        	<!--CharJs-->
+					        	<!--######-->
+					        </canvas>
+								</div>
+							</div>
+						</div>
+						<!--##########-->
+
+					</div>
+
+				</div>
+			</div>
+			<!--右邊-->
+		</div>
+	</div>
+
+	<script src="{% static 'script/jquery-3.2.1.min.js' %}" charset="utf-8"></script>
+	<script src="{% static 'script/bootstrap.js' %}" charset="utf-8"></script>
+	<script src="{% static 'script/Chart.js' %}" charset="utf-8"></script>				<!-- 載人官方繪圖 Function-->
+	<script src="{% static 'script/select.js' %}" charset="utf-8"></script>				<!-- 載人選擇事件 -->
+	<script src="{% static 'script/myChart.js' %}" charset="utf-8"></script>			<!-- 載人繪圖 Function -->
+	<script src="{% static 'script/btn.js' %}" charset="utf-8"></script>					<!-- 載人按鈕 Funtion -->
+	<script charset="utf-8" type="text/javascript">
+		var air_data_lst = {{air_data_lst}}; 											//全堿 server 端回傳空氣資料
+		var pm25_lst = {{data|safe}}; 														//全堿 server 端回傳站點過去資料
+		var siteLst = document.getElementById('site_lst'); 				//全堿 Listbox 物件變數
+		siteLst.selectedIndex = 0; 																//Listbox 預選第一個
+		var site = siteLst.options[siteLst.selectedIndex].text; 	//全堿 取得選項文字內容
+		var past; 								//繪圖類別 上
+		var area;									//繪圖類別 下
+		var past_point = { 				//全堿 過去資料圖表結構物件
+			type: 'line',
+			data: {
+				labels: AxisX12(),
+				datasets: [{
+					label: "PM2.5",
+					data: pm25_lst[site]['12'],
+					fill: false,
+					borderColor: 'orange',
+					backgroundColor: '#f21515'
+				}]
+			},
+			options: {
+				responsive: true,
+				title: {
+					display: true,
+					text: site
+				},
+				tooltips: {
+					mode: 'index',
+					intersect: false,
+				},
+				hover: {
+					mode: 'nearest',
+					intersect: true
+				},
+				scales:{
+					yAxes:[{
+						ticks:{
+							beginAtZero:true
+						}
+					}]
+				},
+			}
+		};
+		var area_point = { 				//全堿 區域資料圖表結構物件
+			type: 'bar',
+			data: {
+				labels: pm25_lst[site]['area'],
+				datasets: [{
+					label: "PM2.5",
+					data: AxisY(),
+					fill: false,
+					backgroundColor: '#4695e8',
+          borderColor: 'blue',
+				}]
+			},
+			options: {
+				responsive: true,
+				title: {
+					display: true,
+					text: '方圓 7 公里內'
+				},
+				tooltips: {
+					mode: 'index',
+					intersect: false,
+				},
+				hover: {
+					mode: 'nearest',
+					intersect: true
+				},
+				scales:{
+					yAxes:[{
+						ticks:{
+							beginAtZero:true
+						}
+					}]
+				},
+			}
+		};
+
+		init(); 		//初始繪圖模組
+		select(); 	//Listbox 選取事件預選第一個選項
+	</script>
+</body>
+
+</html>

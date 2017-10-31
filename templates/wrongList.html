@@ -1,0 +1,222 @@
+<!DOCTYPE html> {% load static %}
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta property="fb:app_id" content="909518255880791" />
+  <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+  <style>
+    .container-fluid {
+      margin-top: 15px;
+    }
+
+    @media only screen and (max-width: 767px) {
+      .fb-comments {
+        width: 100% !important;
+      }
+      .fb-comments iframe[style] {
+        width: 100% !important;
+      }
+      .fb-like-box {
+        width: 100% !important;
+      }
+      .fb-like-box iframe[style] {
+        width: 100% !important;
+      }
+      .fb-comments span {
+        width: 100% !important;
+      }
+      .fb-comments iframe span[style] {
+        width: 100% !important;
+      }
+      .fb-like-box span {
+        width: 100% !important;
+      }
+      .fb-like-box iframe span[style] {
+        width: 100% !important;
+      }
+    }
+    input{
+      background: none;
+      border: none;
+      width: 150px;
+    }
+    tr:hover{
+      cursor: pointer;
+      background-color: #93f441;
+    }
+  </style>
+
+</head>
+
+<body id="body" onload="init()">
+
+  <div id="fb-root"></div>
+  <script>
+    window.fbAsyncInit = function() {
+      FB.init({
+        appId: '909518255880791',
+        autoLogAppEvents: true,
+        xfbml: true,
+        version: 'v2.10'
+      });
+      FB.AppEvents.logPageView();
+    };
+    (function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s);
+      js.id = id;
+      js.src = 'https://connect.facebook.net/zh_TW/sdk.js';
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+
+
+    function postToPage() {
+      var page_id = '277631202754911';
+      FB.api('/' + page_id, {
+        fields: 'access_token'
+      }, function(resp) {
+        if (resp.access_token) {
+          FB.api('/' + page_id + '/feed',
+            'post', {
+              message: "I'm a Page!",
+              link: location.href,
+              access_token: resp.access_token
+            },
+            function(response) {
+              console.log(response);
+              //response 為一個dict {id: "POST ID"}
+            });
+        }
+      });
+    };
+  </script>
+
+  <div class="container-fluid">
+    <div class="row clearfix">
+      <div class="col-md-12 column">
+        <nav class="navbar navbar-default" role="navigation">
+
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"> <span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button>
+            <a class="navbar-brand" hred="#">報錯資料</a>
+          </div>
+
+          <div id="linkbar" class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+              <li><a href="http://127.0.0.1:8000/index/">首頁</a></li>
+              <li class="active"><a href="http://127.0.0.1:8000/wronglist/">報錯資料</a></li>
+            </ul>
+          </div>
+
+        </nav>
+      </div>
+    </div>
+
+
+    <div class="row clearfix">
+      <div class="col-md-8 column">
+        <form id="errorForm" action="." method="get">
+          <table id="errorTable" class="table table-hover table-striped">
+            <thead>
+              <tr class="info">
+                <th>
+                  編號
+                </th>
+                <th>
+                  測站名稱
+                </th>
+                <th>
+                  發生時間
+                </th>
+                <th>
+                  原因
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for row in error %}
+              <tr id="{{row.2}}" onclick="tableClick(this.id)">
+                <td>{{row.1}}</td>
+                <td>{{row.0}}</td>
+                <td>{{row.3}}</td>
+                <td>{{row.4}}</td>
+                <td style="display:none;">{{row.5}}</td>
+                <td style="display:none;">{{row.6}}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+          <input type="text" id="stId" name="stId" style="display:none;">
+          <input type="text" id="stLat" name="stLat" style="display:none;">
+          <input type="text" id="stLon" name="stLon" style="display:none;">
+          <input id="ok" type="submit" value="submit" style="display:none;">
+        </form>
+      </div>
+      <div class="col-md-4 column">
+        <iframe id="map" width="400" height="250" frameborder="0" style="border:0" src=http://maps.google.com.tw/maps?f=q&hl=zh-TW&geocode=&q=25.026635,121.522461&z=16&output=embed allowfullscreen>
+			  </iframe>
+      </div>
+    </div>
+  </div>
+
+  <div class="container-fluid">
+
+  </div>
+
+  <div class="container-fluid">
+    <div class="row clearfix">
+      <div class="col-md-8 column">
+        <div class="panel panel-primary">
+          <div class="panel-heading">
+            <h3 class="panel-title">社群留言</h3>
+          </div>
+          <div class="panel-body">
+
+            <div class="fb-follow" data-href="https://www.facebook.com/allenabcde" data-layout="standard" data-size="small" data-show-faces="true"></div>
+            <button onclick="postToPage()">test post!</button>
+            <!--
+				<script>document.getElementById("fb-comments").data-href=""</script>
+				-->
+            <div class="fb-comments" data-href="http://127.0.0.1:8000/wronglist/?stId=640_10010&stLat=23.706167&stLon=120.537682" data-numposts="5"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4 column">
+      </div>
+    </div>
+  </div>
+
+  <script src="{% static 'script/jquery-3.2.1.min.js' %}" charset="utf-8"></script>
+  <script src="{% static 'script/bootstrap.js' %}" charset="utf-8"></script>
+  <script>
+    function init() {
+      var stLat = {{stLat}};
+      var stLon = {{stLon}};
+
+      var map = document.getElementById('map');                                 //取得地圖物件
+      map.src = 'http://maps.google.com.tw/maps?f=q&hl=zh-TW&geocode=&q=' +
+      stLat+ ',' + stLon + '&z=16&output=embed';
+    }
+
+    function tableClick(Id) {
+      var Table = document.getElementById('errorTable');                        //取得表格物件
+      var Row = document.getElementById(Id);                                    //取得表格物件被選取的那一列
+      document.getElementById('stId').value = Row.id;                           //取得選擇的測站 Id
+      var stLat = Table.rows[Row.rowIndex].cells[4].firstChild.data;            //取得緯度
+      var stLon = Table.rows[Row.rowIndex].cells[5].firstChild.data;            //取得經度
+      document.getElementById('stLat').value = stLat;
+      document.getElementById('stLon').value = stLon;
+      document.getElementById('ok').click();
+
+      // var map = document.getElementById('map');                                 //取得地圖物件
+      // map.src = 'http://maps.google.com.tw/maps?f=q&hl=zh-TW&geocode=&q=' +
+      // stLat+ ',' + stLon + '&z=16&output=embed';                                //更改地圖經緯度
+    }
+
+  </script>
+</body>
+
+</html>
