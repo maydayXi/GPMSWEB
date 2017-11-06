@@ -1,289 +1,242 @@
 <!DOCTYPE html>
-{% load staticfiles %}				<!-- 載人 static 資料夾檔案 -->
+{% load staticfiles %}
+<html class="no-js">
 
 <head>
-	<meta charset="UTF-8">
-	<title>Data Test</title>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>GPMS</title>
+	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<!--引入Bootstrap-->
-	<link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
-	<!--加入自定義CSS-->
-	<style>
-		.container-fluid {
-			margin-top: 15px;
-		}
-
-		#ownInfo th {
-			text-align: center;
-		}
-
-		#ownInfo td {
-			text-align: center;
-			font-family: Microsoft JhengHei;
-			font-size: 18px;
-		}
-	</style>
-
+	<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+	<!-- Fonts -->
+	<!-- Source Sans Pro -->
+	<link href="https://fonts.googleapis.com/css?family=Droid+Serif:400i|Source+Sans+Pro:300,400,600,700" rel="stylesheet">
+	<!-- CSS -->
+	<!-- <link rel="stylesheet" href="css/bootstrap.min.css"> -->
+	<!-- Bootstrap CDN -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css">
+	<!--
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/css/bootstrap.min.css" integrity="sha384-AysaV+vQoT3kOAXZkl02PThvDr8HYKPZhNT5h/CXfBThSRXQ6jW5DO2ekP5ViFdi" crossorigin="anonymous">
+        -->
+	<link rel="stylesheet" href="{% static "css/themefisher-fonts.css" %}">
+	<link rel="stylesheet" href="{% static "css/font-awesome.min.css" %}">
+	<link rel="stylesheet" href="{% static "css/animate.css" %}">
+	<link rel="stylesheet" href="{% static "css/style.css" %}">
+	<!-- Responsive Stylesheet -->
+	<link rel="stylesheet" href="{% static "css/responsive.css" %}">
 </head>
 
 <body id="body">
-	<div class="container-fluid">
-		<div class="row clearfix">
-			<div class="col-md-12 column">
-				<nav class="navbar navbar-default" role="navigation">
+<!--
+	<div id="preloader">
+		<div class="book">
+			<div class="book__page"></div>
+			<div class="book__page"></div>
+			<div class="book__page"></div>
+		</div>
+	</div> -->
 
-					<div class="navbar-header">
-						<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"> <span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button>
-						<a class="navbar-brand" hred="#">報錯資料</a>
+	<!--
+	    Header start
+	    ==================== -->
+	<nav class="navbar navbar-expand-md navbar-inverse fixed-top">
+
+		<a class="navbar-brand" href="#"><img src="{% static "images/logo.png" %}" alt=""></a>
+
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+      <img src="{% static "images/toggler.png" %}" class="img-fluid">
+    </button>
+
+		<div class="collapse navbar-collapse " id="collapsibleNavbar">
+			<ul class="navbar-nav ml-auto menu">
+				<li class="nav-item">
+					<a class="nav-link" href="http://127.0.0.1:8000/gpms/index/">HOME</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="http://127.0.0.1:8000/gpms/wronglist/">WrongList</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="http://127.0.0.1:8000/gpms/data/">DataCheck</a>
+				</li>
+			</ul>
+		</div>
+	</nav>
+
+	<section class="hero-area bg-1">
+		<div class="container-fluid">
+			<div class="row box">
+				<div class="col-md-6">
+					<div class="block">
+						<h1 class="wow fadeInDown" data-wow-delay="0.3s" data-wow-duration=".2s">
+              「我們的肺不是空氣清淨機」
+            </h1>
+						<p class="wow fadeInDown" data-wow-delay="0.5s" data-wow-duration=".5s">最真實的資料<br> 來自於最接近現實的你們
+						</p>
+						<div class="wow fadeInDown text-center" data-wow-delay="0.7s" data-wow-duration=".7s">
+							<a class="btn btn-home" href="#about" role="button">Get Started</a>
+						</div>
 					</div>
+				</div>
 
-					<div id="linkbar" class="collapse navbar-collapse">
-						<ul class="nav navbar-nav">
-							<li class="active"><a href="http://127.0.0.1:8000/index/">首頁</a></li>
-							<li><a href="http://127.0.0.1:8000/wronglist/">報錯資料</a></li>
-						</ul>
+				<div class="col-md-6 wow fadeInDown" data-wow-delay="0.8s" data-wow-duration="1s">
+					<div class="block">
+						<table class="table table-dark table-hover">
+							<thead>
+								<tr>
+									<th>測站</th>
+									<th>時間</th>
+									<th>原因</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>{{error.0.0}}</td>
+									<td>{{error.0.3}}</td>
+									<td>{{error.0.4}}</td>
+								</tr>
+								<tr>
+									<td>{{error.1.0}}</td>
+									<td>{{error.1.3}}</td>
+									<td>{{error.1.4}}</td>
+								</tr>
+								<tr>
+									<td>{{error.2.0}}</td>
+									<td>{{error.2.3}}</td>
+									<td>{{error.2.4}}</td>
+								</tr>
+								<tr>
+									<td>{{error.3.0}}</td>
+									<td>{{error.3.3}}</td>
+									<td>{{error.3.4}}</td>
+								</tr>
+							</tbody>
+						</table>
 					</div>
+				</div>
+			</div>
+			<!-- .row close -->
+		</div>
+		<!-- .container close -->
+	</section>
+	<!-- header close -->
 
 
-				</nav>
+
+	<!--
+        About start
+        ==================== -->
+	<section class="section about " id="about">
+		<div class="container-fluid">
+			<div class="row" id="about_row">
+				<div class="col-md-5 col-sm-12 ccol">
+					<div class="content">
+						<div class="sub-heading">
+							<h1 class="wow fadeInLeft">問題到底在哪裡?</h1>
+
+						</div>
+					</div>
+				</div>
+				<div class="col-md-5 col-sm-12 cool">
+					<p class="wow fadeInLeft" data-wow-delay="0.5s">
+						>根據每個點進行不同的判斷
+					</p>
+					<p class="wow fadeInLeft" data-wow-delay="0.8s">
+						>透過科學的方法找出有問題的點
+					</p>
+				</div>
+
+				<div class="w-100"></div>
+
+				<div class="col-md-12 col-sm-12 wow fadeInLeft ccol" data-wow-delay="0.3s">
+					<hr>
+					<div class="bg-gray"></div>
+				</div>
 			</div>
 		</div>
-	</div>
-	<div class="container-fluid">
-		<div class="row clearfix">
-			<!--左邊-->
-			<div class="col-md-5 column">
-				<!--左上 panel -->
-				<div class="row clearfix">
-					<div class="col-md-12 column">
-						<div class="panel panel-primary">
-							<div class="panel-heading">
-								<h3 class="panel-title">
-								本機端資料
-							</h3>
-							</div>
+	</section>
+	<!-- #about close -->
+	<!--
+        About start
+        ==================== -->
 
-							<div class="panel-body">
-								<!--左上再包一個panel-->
-								<div class="panel panel-info">
-									<div class="panel-heading">
-										<h3 class="panel-title">
-										距離您最近的點是
-									</h3>
-									</div>
-
-									<div class="panel-body">
-										<h3 id="stNote" style="font-family: Microsoft JhengHei;text-align: center;">東山高中</h3>
-									</div>
-									<table class="table table-bordered" id="ownInfo">
-										<thead>
-											<tr>
-												<th>距離</th>
-												<th>PM2.5</th>
-												<th>PM10</th>
-												<th>溫度</th>
-												<th>濕度</th>
-											</tr>
-										</thead>
-										<tbody>
-											<tr>
-												<td>4.22km</td>
-												<td id="PM2.5">89</td>
-												<td id="PM10">99</td>
-												<td id="Temperature">23&deg;</td>
-												<td id="Humidity">99%</td>
-											</tr>
-										</tbody>
-									</table>
-								</div>
-								<!--左上再包一個panel-->
-							</div>
-							<div class="panel-footer">
-								<button class="btn btn-info btn-block" id="btn_get_gps" onclick="getLocation()">獲取本地GPS</button>
-							</div>
+	<!--
+        Service start
+        ==================== -->
+	<section id="service" class="service section">
+		<div class="container">
+			<div class="row">
+				<div class="heading">
+					<h2 class="wow fadeInDown">透過社群讓我們更了解世界</h2>
+					<hr>
+					<img src="{% static "images/c_1.png" %}" class="wow fadeInDown img-fluid">
+					<hr>
+					<div class="row">
+						<div class="col-md-4 col-sm-12 wow fadeInDown c2 c2text">
+							<h2>八卦無罪 爆料有理</h2>
+							<p>你們的資訊</p>
+							<p>讓我們的資料更接受現實</p>
+						</div>
+						<div class="col-md-8 col-sm-12 wow">
+							<img src="{% static "images/c_2.jpg" %}" class="img-fluid">
 						</div>
 					</div>
-				</div>
-				<!--左上 panel -->
-				<!--左下 panel -->
-				<div class="row clearfix">
-					<div class="col-md-12 column">
-						<div class="panel panel-info">
-							<div class="panel-heading">
-								<h3 class="panel-title">
-								所有地點List
-							</h3>
-							</div>
-							<div class="panel-body">
-								<form action="." method="get" id="stform">
-									<select size="20" class="form-control" style="font-family: Microsoft JhengHei;
-									font-size: 18px;" id="site_lst" name="site" onchange="select(this.value)">
-									{% for id,site in site_lst %}
-										<option value={{id}}>{{site}}
-									{% endfor %}
-									</select>
-									<input id="clickBtn" type="submit" value="sent" style="visibility:hidden">
-								</form>
-							</div>
-						</div>
-					</div>
-				</div>
-				<!--左下 panel -->
-			</div>
-			<!--左邊-->
-
-			<!--右邊-->
-			<div class="col-md-7 column">
-				<div class="panel panel-default">
-					<div class="panel-heading">
-						<div class="btn-toolbar" role="toolbar">
-							<div class="btn-group">
-								<label class="btn btn-info">
-						        <input type="checkbox"> PM2.5
-						    </label>
-								<label class="btn btn-info">
-						        <input type="checkbox"> PM10
-						    </label>
-							</div>
-
-							<div class="btn-group pull-left">
-								<button type="button" class="btn btn-success" onclick="_1()">1小時</button>
-								<button type="button" class="btn btn-success" onclick="_6()">6小時</button>
-								<button type="button" class="btn btn-success" onclick="_12()">12小時</button>
-							</div>
-						</div>
-					</div>
-
-					<div class="panel-body">
-
-						<!--該點的數據-->
-
-						<div class="panel panel-warning">
-							<div id="past" class="panel-heading" onload="show_char()">
-								<h3 class="panel-title" id="point_data">該點過去的數據</h3>
-							</div>
-							<div class="panel-body">
-								<div style="width:700px;">
-									<canvas id="pastChart">
-					        	<!--CharJs-->
-					        	<!--######-->
-					        </canvas>
-								</div>
-							</div>
-						</div>
-						<!--##########-->
-						<!--全部的數據-->
-						<div class="panel panel-warning">
-							<div class="panel-heading">
-								<h3 class="panel-title">鄰近的數據</h3>
-							</div>
-							<div class="panel-body">
-								<div style="width: 700px;">
-									<canvas id="areaChart">
-					        	<!--CharJs-->
-					        	<!--######-->
-					        </canvas>
-								</div>
-							</div>
-						</div>
-						<!--##########-->
-
-					</div>
-
 				</div>
 			</div>
-			<!--右邊-->
 		</div>
-	</div>
+		<!-- .container close -->
+	</section>
+	<!-- #service close -->
 
-	<script src="{% static 'script/jquery-3.2.1.min.js' %}" charset="utf-8"></script>
-	<script src="{% static 'script/bootstrap.js' %}" charset="utf-8"></script>
-	<script src="{% static 'script/Chart.js' %}" charset="utf-8"></script>				<!-- 載人官方繪圖 Function-->
-	<script src="{% static 'script/select.js' %}" charset="utf-8"></script>				<!-- 載人選擇事件 -->
-	<script src="{% static 'script/myChart.js' %}" charset="utf-8"></script>			<!-- 載人繪圖 Function -->
-	<script src="{% static 'script/btn.js' %}" charset="utf-8"></script>					<!-- 載人按鈕 Funtion -->
-	<script charset="utf-8" type="text/javascript">
-		var air_data_lst = {{air_data_lst}}; 											//全堿 server 端回傳空氣資料
-		var pm25_lst = {{data|safe}}; 														//全堿 server 端回傳站點過去資料
-		var siteLst = document.getElementById('site_lst'); 				//全堿 Listbox 物件變數
-		siteLst.selectedIndex = 0; 																//Listbox 預選第一個
-		var site = siteLst.options[siteLst.selectedIndex].text; 	//全堿 取得選項文字內容
-		var past; 								//繪圖類別 上
-		var area;									//繪圖類別 下
-		var past_point = { 				//全堿 過去資料圖表結構物件
-			type: 'line',
-			data: {
-				labels: AxisX12(),
-				datasets: [{
-					label: "PM2.5",
-					data: pm25_lst[site]['12'],
-					fill: false,
-					borderColor: 'orange',
-					backgroundColor: '#f21515'
-				}]
-			},
-			options: {
-				responsive: true,
-				title: {
-					display: true,
-					text: site
-				},
-				tooltips: {
-					mode: 'index',
-					intersect: false,
-				},
-				hover: {
-					mode: 'nearest',
-					intersect: true
-				},
-				scales:{
-					yAxes:[{
-						ticks:{
-							beginAtZero:true
-						}
-					}]
-				},
-			}
-		};
-		var area_point = { 				//全堿 區域資料圖表結構物件
-			type: 'bar',
-			data: {
-				labels: pm25_lst[site]['area'],
-				datasets: [{
-					label: "PM2.5",
-					data: AxisY(),
-					fill: false,
-					backgroundColor: '#4695e8',
-          borderColor: 'blue',
-				}]
-			},
-			options: {
-				responsive: true,
-				title: {
-					display: true,
-					text: '方圓 7 公里內'
-				},
-				tooltips: {
-					mode: 'index',
-					intersect: false,
-				},
-				hover: {
-					mode: 'nearest',
-					intersect: true
-				},
-				scales:{
-					yAxes:[{
-						ticks:{
-							beginAtZero:true
-						}
-					}]
-				},
-			}
-		};
+	<section class="call-to-action section">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12 wow text-center">
+					<div class="block">
+						<h2>追蹤我們 獲得更多相關的空氣資訊</h2>
+						<p>Follow our website, get more information</p>
+						<div class="col-lg-6 offset-lg-3">
+							<div class="input-group">
+								<input type="text" class="form-control" placeholder="Your Email Address Here">
+								<span class="input-group-btn">
+                  <button class="btn btn-default btn-subscription" type="button">Subscribe</button>
+                </span>
+							</div>
+							<!-- /input-group -->
+						</div>
+						<!-- /.col-lg-6 -->
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- #call-to-action close -->
 
-		init(); 		//初始繪圖模組
-		select(); 	//Listbox 選取事件預選第一個選項
-	</script>
+	<footer>
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="block">
+						<p>Copyright &copy; <a href="http://im.nutc.edu.tw/bin/home.php">NUTC-IM</a> | Prof. Allen Lian </p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</footer>
+
+	<!-- Js -->
+	<script src="{% static "scripts/vendor/jquery-2.1.1.min.js" %}"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.3.7/js/tether.min.js" integrity="sha384-XTs3FgkjiBgo8qjEjBk0tGmf3wPrWtA6coPfQDfFEY8AnYJwjalXCiosYRBIBZX8" crossorigin="anonymous"></script>
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
+	<script src="{% static "scripts/vendor/modernizr-2.6.2.min.js" %}"></script>
+	<script src="{% static "scripts/jquery.form.js" %}"></script>
+	<script src="{% static "scripts/jquery.nav.js" %}"></script>
+	<script src="{% static "scripts/wow.min.js" %}"></script>
+	<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js" integrity="sha384-3ceskX3iaEnIogmQchP8opvBy3Mi7Ce34nWjpBIwVTHfGYWQS9jwHDVRnpKKHJg7" crossorigin="anonymous"></script> -->
+	<script src="{% static "scripts/main.js" %}"></script>
+
 </body>
 
 </html>
