@@ -175,14 +175,14 @@
   <script src="{% static "scripts/myChart.js" %}"></script>
   <script src="{% static "scripts/btn.js" %}"></script>
   <script>
-    var air_data_lst = {{air_data_lst}}; //全堿 server 端回傳空氣資料
-    var pm25_lst = {{data|safe}}; //全堿 server 端回傳站點過去資料
-    var siteLst = document.getElementById('site_lst'); //全堿 Listbox 物件變數
-    siteLst.selectedIndex = 0; //Listbox 預選第一個
-    var site = siteLst.options[siteLst.selectedIndex].text; //全堿 取得選項文字內容
-    var past; //繪圖類別 上
-    var area; //繪圖類別 下
-    var past_point = { //全堿 過去資料圖表結構物件
+    var air_data_lst = {{air_data_lst}};                      // 全堿 server 端回傳空氣資料
+    var pm25_lst = {{data|safe}};                             // 全堿 server 端回傳站點過去資料
+    var siteLst = document.getElementById('site_lst');        // 全堿 Listbox 物件變數
+    siteLst.selectedIndex = 0;                                // Listbox 預選第一個
+    var site = siteLst.options[siteLst.selectedIndex].text;   // 全堿 取得選項文字內容
+    var past;                                                 // 繪圖類別 上
+    var area;                                                 // 繪圖類別 下
+    var past_point = {                                        // 全堿 過去資料圖表結構物件
       type: 'line',
       data: {
         labels: AxisX12(),
@@ -217,7 +217,7 @@
         },
       }
     };
-    var area_point = { //全堿 區域資料圖表結構物件
+    var area_point = {                                        // 全堿 區域資料圖表結構物件
       type: 'bar',
       data: {
         labels: pm25_lst[site]['area'],
@@ -253,8 +253,8 @@
       }
     };
 
-    init(); //初始繪圖模組
-    select(); //Listbox 選取事件預選第一個選項
+    init();                                                   // 初始繪圖模組
+    select();                                                 // Listbox 選取事件預選第一個選項
   </script>
 </body>
 
