@@ -15,8 +15,8 @@ class DBService:
         self.path = os.path.dirname(__file__)       #取得資料庫所在路徑
 
     # 2017-10-12 add by Mayday
-    # <summary> Read all table name </summary>
-    # <return> All table name list </return>
+    # <summary> 取得所有空氣資料表 </summary>
+    # <return> 空氣資料表串列 </return>
     def readAllTableName(self):
         connection = sqlite3.connect(self.path + '/' + 'PM25.sqlite')
         queryStr = '''SELECT type,name FROM sqlite_master WHERE type = "table"

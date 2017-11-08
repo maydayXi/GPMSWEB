@@ -29,7 +29,7 @@
   <div class="container-fluid">
     <div class="row">
       <nav class="navbar navbar-expand-md navbar-inverse fixed-top">
-        <a class="navbar-brand" href="#"><img src="{% static "images/logo.png" %}" alt=""></a>
+        <a class="navbar-brand" href="http://127.0.0.1:8000/gpms/index/"><img src="{% static "images/logo.png" %}" alt=""></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
           <img src="{% static "images/toggler.png" %}" class="img-fluid">
         </button>
@@ -99,13 +99,18 @@
           <!--Content-->
           <div class="card-body">
             <form action="." method="get" id="stform">
-              <select size="23" class="form-control" style="font-family: Microsoft JhengHei;
-              font-size: 18px;" id="site_lst" name="site" onchange="select(this.value)">
+              <select size="20" class="form-control" style="font-family: Microsoft JhengHei;
+              font-size: 18px;" id="site_lst" name="site" onchange="select()">
               {% for id,site in site_lst %}
                 <option value={{id}}>{{site}}
               {% endfor %}
               </select>
-              <input id="clickBtn" type="submit" value="sent" style="visibility:hidden">
+              <input id="selectedIndex" type="text" name="selectedIndex" value="" style="visibility:hidden">
+              <input id="PM2.5Value" type="text" name="PM2.5Value" value="" style="visibility:hidden">
+              <input id="PM10Value" type="text" name="pm10Value" value="" style="visibility:hidden">
+              <input id="TemperatureValue" type="text" name="TemperatureValue" value="" style="visibility:hidden">
+              <input id="HumidityValue" type="text" name="HumidityValue" value="" style="visibility:hidden">
+              <input id="sent" type="submit" value="sent" style="visibility:hidden">
             </form>
           </div>
         </div>
@@ -178,7 +183,7 @@
     var air_data_lst = {{air_data_lst}};                      // 全堿 server 端回傳空氣資料
     var pm25_lst = {{data|safe}};                             // 全堿 server 端回傳站點過去資料
     var siteLst = document.getElementById('site_lst');        // 全堿 Listbox 物件變數
-    siteLst.selectedIndex = 0;                                // Listbox 預選第一個
+    siteLst.selectedIndex = {{row}};                          // Listbox 預選第一個
     var site = siteLst.options[siteLst.selectedIndex].text;   // 全堿 取得選項文字內容
     var past;                                                 // 繪圖類別 上
     var area;                                                 // 繪圖類別 下
@@ -253,8 +258,7 @@
       }
     };
 
-    init();                                                   // 初始繪圖模組
-    select();                                                 // Listbox 選取事件預選第一個選項
+    init();                                                   // 初始繪圖模組，預選 Listbox 第一個
   </script>
 </body>
 

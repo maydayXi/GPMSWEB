@@ -30,7 +30,7 @@ class TableService:
     #2017-10-12 add by Mayday
     # <summary> 取得 x 與 y 軸的數據 </summary>
     # <param name = "table_name"> 表格名稱或表格陣列 </param>
-    # <param name = "stId"> 測站名稱 </param>
+    # <param name = "stId"> 測站 ID </param>
     # <param name = "tag"> 時間模式 </param>
     # <return> X 軸數據, y 軸數據 </return>
     def getXYAxis(self,table_name,stId,interval):

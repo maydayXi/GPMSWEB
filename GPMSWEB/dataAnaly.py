@@ -6,24 +6,24 @@ class dataAnaly:
 
     # 2017-10-20 add by Mayday
     def __init__(self):
-        self.db = DBService()                       #Database instance
-        self.area_gps = []                          #Final site area list
-        self.note = []                              #Site name list
+        self.db = DBService()                       # Database instance
+        self.area_gps = []                          # Final site area list
+        self.note = []                              # Site name list
 
     # <summary>Get area point id</summary>
     # <param name = "timeStr">Table name</param>
     def getAreaId(self,timeStr):
-        gps = []                                    #Site area temp list
-        r_data = self.db.readAreaData(timeStr)      #Read area data from db
+        gps = []                                    # Site area temp list
+        r_data = self.db.readAreaData(timeStr)      # Read area data from db
 
         for item in r_data:
-            gps.append([item[0],item[1],item[2]])   #Add site id,lat and lon
-            self.note.append(item[3])               #Add site name
+            gps.append([item[0],item[1],item[2]])   # Add site id,lat and lon
+            self.note.append(item[3])               # Add site name
 
         #cal area point
         for i in gps:
-            temp = []                               #Temp list
-            temp.append(i[0])                       #Add point itself
+            temp = []                               # Temp list
+            temp.append(i[0])                       # Add point itself
 
             for j in gps:
                 if (self.haversine(i[2],i[1],j[2],j[1]) > 0 and
@@ -33,8 +33,8 @@ class dataAnaly:
             self.area_gps.append(temp)
 
     # 2017-10-25 add by Mayday
-    # <summary>Get area point site</summary>
-    # <return>Area point site name list</return>
+    # <summary> 取得區域測站名稱 </summary>
+    # <return> 區域測站名稱串列 </return>
     def getAreaSite(self):
         result = []
 
@@ -53,25 +53,25 @@ class dataAnaly:
     # <param name = "lat1">第一點緯度</param>
     # <param name = "lon2">第二點經度</param>
     # <param name = "lat2">第二點緯度</param>
-    def haversine(self,lon1, lat1, lon2, lat2): #經度1，緯度1，經度2，緯度2
+    def haversine(self,lon1, lat1, lon2, lat2):         # 經度1，緯度1，經度2，緯度2
         lon1, lat1, lon2, lat2 = map(math.radians, [lon1, lat1, lon2, lat2])
         # haversine
         dlon = lon2 - lon1
         dlat = lat2 - lat1
         a = math.sin(dlat/2)**2 + math.cos(lat1) * math.cos(lat2) * math.sin(dlon/2)**2
         c = 2 * math.asin(math.sqrt(a))
-        r = 6371 #地球半徑
+        r = 6371                                        # 地球半徑
         return c * r
 
     # <summary>Get area PM2.5 and PM10 information</summary>
     # <param name = "timeStr">Table name</param>
     def getAreaAirInfo(self,timeStr):
 
-        self.area_pm25 = []             #Area PM2.5 list
-        self.area_pm10 = []             #Area PM10 list
+        self.area_pm25 = []             # Area PM2.5 list
+        self.area_pm10 = []             # Area PM10 list
         for item in self.area_gps:
-            temp25 = []                 #Temp PM2.5 list
-            temp10 = []                 #Temp PM10 list
+            temp25 = []                 # Temp PM2.5 list
+            temp10 = []                 # Temp PM10 list
             for i in item:
                 r_data = self.db.readPM25PM10(timeStr,i)
                 temp25.append(r_data[0][0])
